@@ -1,6 +1,7 @@
 from cobs import cobs
 import serial
 from time import sleep
+from threading import Thread
 
 ser = serial.Serial('/dev/ttyACM0', baudrate=115200, bytesize=8, parity='N', stopbits=1, timeout=3)
 
@@ -12,6 +13,15 @@ def write_robot(left: float, right: float):
                          int(right * 127).to_bytes(1, byteorder='big', signed=True))
 
     ser.write(values + b'\0')
+
+
+def serial_reader():
+    while True:
+        print(ser.readline())
+
+
+thread = Thread(target=serial_reader)
+thread.start()
 
 
 while True:
