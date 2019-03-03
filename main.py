@@ -21,4 +21,5 @@ while True:
     sleep(1)
     write_robot(-1, -1)
     sleep(1)
-
+    write_robot(0, 0)
+    sleep(1)
