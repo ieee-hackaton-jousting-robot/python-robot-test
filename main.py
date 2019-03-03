@@ -6,9 +6,10 @@ ser = serial.Serial('/dev/ttyACM0', baudrate=115200, bytesize=8, parity='N', sto
 
 zeroByte = b'\x00'  # COBS 1-byte delimiter is hex zero as a (binary) bytes character
 
+
 def write_robot(left: float, right: float):
-    values = cobs.encode([int(left * 127).to_bytes(1, byteorder='big', signed=True),
-                          int(right * 127).to_bytes(1, byteorder='big', signed=True)])
+    values = cobs.encode(int(left * 127).to_bytes(1, byteorder='big', signed=True) +
+                         int(right * 127).to_bytes(1, byteorder='big', signed=True))
 
     ser.write(values + b'\0')
 
